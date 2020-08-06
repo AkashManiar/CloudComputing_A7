@@ -63,7 +63,7 @@ module.exports = {
                         },
                         { headers: headerObj }
                     ).then(addPartRes => {
-                        console.log('__ADDParts__');
+                        // console.log('__ADDParts__');
                         if (addPartRes.statusText === 'OK')  {
                             res.redirect('/getParts');
                         } else {
@@ -129,9 +129,9 @@ module.exports = {
         const part_id = +req.param('partId')
         axios.delete(
             'https://xarwe8xbja.execute-api.us-east-1.amazonaws.com/Dev/',
-            {
-                partId: 1,
-            },
+            {data: {
+                "partId": part_id,
+            }},
             {headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -139,14 +139,14 @@ module.exports = {
                 'Access-Control-Allow-Headers': '*'
             }}
         ).then(deletedREs => {
-            console.log('___deletedREs__', deletedREs.data);
+            // console.log('___deletedREs__', deletedREs.data);
             if (deletedREs.statusText === 'OK')  {
                 res.redirect('/getParts');
             } else {
                 res.send({ error: true, message: 'Part that your are trying to edit does not exist' });
             }
         }).catch(err => {
-            console.log('__DELETE_ERR_', err);
+            // console.log('__DELETE_ERR_', err);
             res.send({
                 error: true,
                 err,
