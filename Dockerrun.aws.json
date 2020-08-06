@@ -1,0 +1,11 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+        "Name": "akashmaniar/dal_cloud_computing:a6_company_y"
+    },
+    "Ports":[
+        {
+            "ContainerPort": 1337
+        }
+    ]
+}

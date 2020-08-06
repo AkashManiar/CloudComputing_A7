@@ -1,0 +1,59 @@
+<style>
+    table, th, td{
+        padding: 10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<body>
+    <div class="container">
+        <form action="/">
+            <button type= "submit" class="btn btn-info">Go to main page</button>
+        </form>
+        <br>
+        <h3>List of orders stored in system:</h3>
+    <br>
+    <% if(typeof message != 'undefined'){ %>
+        <div class="alert alert-warning" role="alert">
+            <%= message %>
+        </div>
+    <% } %>
+    <% if(typeof orders != 'undefined'){ %>
+        <row>
+            <col>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Part Id</th>
+                            <th>Job Name</th>
+                            <th>User Id</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% parts.forEach(function(order){ %>
+                            <tr>
+                                <td> <%= order.id %> </td>
+                                <td> <%= order.jobName %> </td>
+                                <td> <%= order.userId %> </td>
+                                <td> <%= order.qty %> </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </col>
+        </row>
+    <% } %>
+   <!-- <div class="row">
+        <div class="col-md-3 offset-md-5">
+            <form action="/addPart">
+                <button type= "submit" class="btn btn-success">
+                Add Part
+                </button>
+            </form>
+        </div>
+    </div>-->
+    
+</body>
+</div>
+    

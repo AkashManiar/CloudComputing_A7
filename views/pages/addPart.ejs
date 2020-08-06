@@ -1,0 +1,39 @@
+<body>
+    <div class="container">
+        <h2>Company Y</h2>
+        <br>
+        <form action="/">
+            <button type= "submit" class="btn btn-info">Go to main page</button>
+        </form>
+        <br>
+        <h4>Please fill part details to add part into the system</h4>
+        <br>
+   
+    <br>
+    <% if(typeof message != 'undefined'){ %>
+        <div class="alert alert-danger" role="alert">
+            <%= message %>
+        </div>
+    <% }%>
+    
+    <row>
+        <col md="4">
+        <form action="/addPart" method="POST">
+            <div class="form-group">
+                <label for="partId">PartId</label>
+                <input type="number" required class="form-control" name="partId" placeholder="Please enter unique part Id.">
+            </div>
+            <div class="form-group">
+                <label for="partName">Part Name</label>
+                <input type="text" required class="form-control" name="partName" placeholder="Please enter Name of the part.">
+            </div>
+            <div class="form-group">
+                <label for="qoh">Quantity on hand (Available quantity) </label>
+                <input type="text" class="form-control" name="qoh" placeholder="Please enter Quantity on Hand value.">
+            </div>
+            <button type="submit" class="btn btn-success">Add</button>
+        </form>
+        </col>
+    </row>
+    </div>
+</body>
