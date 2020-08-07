@@ -10,7 +10,7 @@ module.exports.routes = {
   "POST /deletePart/:partId": "PartsController.deletePart",
 
   // These are the APIs are made when to be called externally by others. (eg. Company Z)
-  "GET /parts": "PartsExternalController.getParts",
+  // "GET /parts": "PartsExternalController.getParts",
   "GET /parts/:partId": "PartsExternalController.getParts",
   "POST /isPartExist": "PartsExternalController.isPartExist",
   "POST /add_part": "PartsExternalController.addPart",

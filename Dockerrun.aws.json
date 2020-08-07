@@ -1,7 +1,7 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-        "Name": "akashmaniar/dal_cloud_computing:a6_company_y"
+        "Name": "akashmaniar/dal_cloud_computing:a7"
     },
     "Ports":[
         {

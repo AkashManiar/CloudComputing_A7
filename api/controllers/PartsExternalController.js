@@ -5,36 +5,54 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
+const axios = require('axios')
 
 module.exports = {
   getParts: function (req, res) {
-    const part = {};
-    if (!!req.param("partId")) {
-      part.id = req.param("partId");
-    }
-    sails.models.parts.find(part).exec((err, parts) => {
-      if (err) {
-        res.send({
-          success: false,
-          isError: true,
-          message: "Error in fetching response",
-          error: err,
-        });
-      }
-      parts.length === 0
-        ? res.send({
+    const part_id = +req.param("partId")
+    axios.post(
+        'https://0nmy4bwphh.execute-api.us-east-1.amazonaws.com/dev/',
+        {
+            "partId": part_id
+        },
+        {headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, OPTIONS',
+            'Access-Control-Allow-Headers': '*'
+        }}).then(partInfo => {
+          if (partInfo.statusText === 'OK')  {
+            if (JSON.stringify(partInfo.data) === '{}') {
+              res.send({
+                success: false,
+                isError: false,
+                message: "There are no parts available with given ID",
+                parts: [],
+              })
+            } else {
+              res.send({
+                success: true,
+                isError: false,
+                message: "Successfully fetched parts",
+                parts: [partInfo.data.Item]
+              });
+            }
+          } else {
+            res.send({
+              success: false,
+              isError: true,
+              message: "Error in fetching response",
+              error: err,
+            });
+          }
+        }).catch(err => {
+          res.send({
             success: false,
-            isError: false,
-            message: "There are no parts available",
-            parts: [],
-          })
-        : res.send({
-            success: true,
-            isError: false,
-            message: "Successfully fetched parts",
-            parts,
+            isError: true,
+            message: "Error in fetching response",
+            error: err,
           });
-    });
+        })
   },
   addPart: function (req, res) {
     sails.models.parts
