@@ -96,13 +96,17 @@ module.exports = {
     editPartDetail: function(req, res) {
         res.view('pages/editPart', {part: req.body });
     },
-    editPart: function(req, res) {
+    editPart: function(req, res, part=false) {
+        const isPartTypeObj = typeof part === 'object';
+        const partId = isPartTypeObj ? +part.partId : +req.param('partId');
+        const partName = isPartTypeObj ? part.partName+'' : req.body.partName + '';
+        const qoh = isPartTypeObj ? +part.qoh : +req.body.qoh;
         axios.post(
             'https://ony8i3a05j.execute-api.us-east-1.amazonaws.com/dev',
             {
-                "partId": +req.param('partId'),
-                "partName": req.body.partName + "",
-                "qoh": +req.body.qoh
+                "partId": partId,
+                "partName": partName,
+                "qoh": qoh
             },
             {headers: {
                 'Content-Type': 'application/json',
@@ -112,9 +116,25 @@ module.exports = {
             }}
         ).then(updateResponse => {
             if (updateResponse.statusText === 'OK')  {
-                res.redirect('/getParts');
+                if (isPartTypeObj) {
+                    res.send({
+                        success: true,
+                        isError: false,
+                        message: 'Part Edited successfully.'
+                    });
+                } else {
+                    res.redirect('/getParts');
+                }
             } else {
-                res.send({ error: true, message: 'Part that your are trying to edit does not exist' });
+                if (isPartTypeObj) {
+                    res.send({
+                        success: false,
+                        isError: false,
+                        message: 'Part you are trying to add does not exist.'
+                    });
+                } else {
+                    res.send({ error: true, message: 'Part that your are trying to edit does not exist' });
+                }
             }
         }).catch(err => {
             res.send({
@@ -138,14 +158,12 @@ module.exports = {
                 'Access-Control-Allow-Headers': '*'
             }}
         ).then(deletedREs => {
-            // console.log('___deletedREs__', deletedREs.data);
             if (deletedREs.statusText === 'OK')  {
                 res.redirect('/getParts');
             } else {
                 res.send({ error: true, message: 'Part that your are trying to edit does not exist' });
             }
         }).catch(err => {
-            // console.log('__DELETE_ERR_', err);
             res.send({
                 error: true,
                 err,
